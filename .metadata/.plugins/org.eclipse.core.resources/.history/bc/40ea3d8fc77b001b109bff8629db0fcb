@@ -1,0 +1,14 @@
+package com.cos.myjpa.exhandler;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+import com.cos.myjpa.web.dto.CommonRespDto;
+
+@ControllerAdvice //모든 익셉션을 낚아챔.
+public class GlobalExceptionHandler {
+	
+	public CommonRespDto<?> 잘못된인수(){
+		
+	}
+
+}
