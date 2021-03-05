@@ -38,7 +38,7 @@ public class PostController {
 	}
 	
 	@PostMapping("/test/post/object")
-	public User testPostObject(User user) { 
+	public User testPostObject(User user) {  //x-www-form-urlencoded(기본전략)
 		return user; //MessageConvertor가 낚아챔 -> json으로 변환해서 리턴(RestController 일때만) - 오브젝트가 리턴타입일때만
 	}
 	
