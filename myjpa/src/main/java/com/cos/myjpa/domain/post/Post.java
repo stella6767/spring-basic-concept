@@ -36,10 +36,10 @@ public class Post {
 	@Lob //대용량 데이터
 	private String content;
 	
-	//누가 적었는지?
+	//순방향 매핑
 	@ManyToOne(fetch = FetchType.LAZY) // 연관관계 맺는 법. FK의 주인인 곳에서 적어야 됨.
 	@JoinColumn(name="userId")
-	@JsonIgnoreProperties({"posts"})
+	//@JsonIgnoreProperties({"posts"})
 	private User user;
 		
 	@CreationTimestamp //자동으로 현재시간이 들어감.

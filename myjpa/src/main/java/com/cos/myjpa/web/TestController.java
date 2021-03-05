@@ -83,5 +83,18 @@ public class TestController {
 		return new CommonRespDto<>(1,"성공",null);
 	}
 	
+	
+	
+//	@GetMapping("/test/user/{id}") //유저정보
+//	public CommonRespDto<?> userInfo(@PathVariable Long id){
+//		
+//		User principal = (User)session.getAttribute("principal");
+//		if (principal == null) {
+//			return new CommonRespDto<>(-1,"실패",null);
+//		}else {
+//			User userEntity = userRepository.findById(id).get();
+//			return new CommonRespDto<>(1,"성공",userEntity);
+//		}
+//	}
 
 }
