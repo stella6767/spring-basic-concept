@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,7 +38,8 @@ public class Post {
 	private String content;
 	
 	//순방향 매핑
-	@ManyToOne(fetch = FetchType.LAZY) // 연관관계 맺는 법. FK의 주인인 곳에서 적어야 됨.
+	@ToString.Exclude
+	@ManyToOne(fetch = FetchType.EAGER) // 연관관계 맺는 법. FK의 주인인 곳에서 적어야 됨.
 	@JoinColumn(name="userId")
 	//@JsonIgnoreProperties({"posts"})
 	private User user;

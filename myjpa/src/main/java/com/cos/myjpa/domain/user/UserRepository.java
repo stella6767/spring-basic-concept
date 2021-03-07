@@ -12,13 +12,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //select * from user where username = ?1 and password = ?2
     User findByUsernameAndPassword(String username, String password);
     
-    
 	// 2.nativeQuery
     //@Query(value ="select * FROM user WHERE username = :username AND password = :password", nativeQuery = true)
     @Query(value ="select * FROM user WHERE username = ?1 AND password = ?2", nativeQuery = true)
     User mLogin(String username, String password);
-    
-    
 	
 	// 3.동적쿼리 라이브러리 QueryDSL - 안함
 }

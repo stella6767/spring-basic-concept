@@ -43,12 +43,10 @@ public class PostController {
 	
 	@PostMapping("/post")
 	public CommonRespDto<?> save(@RequestBody PostSaveReqDto postSaveReqDto) { //title,content	
-		User principal = (User)session.getAttribute("principal"); //session 처리는 컨트롤러가 담당
-		
+		User principal = (User)session.getAttribute("principal"); //session 처리는 컨트롤러가 담당	
 		if(principal==null) {
 			return new CommonRespDto<>(-1,"실패",null);
 		}
-		
 		return new CommonRespDto<>(1,"성공",postService.글쓰기(postSaveReqDto, principal));
 	}
 	
