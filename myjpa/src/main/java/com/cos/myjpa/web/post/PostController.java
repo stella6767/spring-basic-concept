@@ -56,13 +56,13 @@ public class PostController {
 		return new CommonRespDto<>(1,"성공",postService.한건찾기(id)); //MessageConvertor(Jackson) 발동
 	}
 	
-	
+	//인증만 필요
 	@GetMapping("/post")
 	public CommonRespDto<?> findAll(){
 		return new CommonRespDto<>(1, "성공", postService.전체찾기());
 	}
 	
-	
+	// 인증(Authentication) + 권한(Authorization) 필요
 	@PutMapping("/post/{id}")
 	public CommonRespDto<?> update(@PathVariable Long id, @RequestBody PostUpdateReqDto postUpdateReqDto){
 		
@@ -72,7 +72,7 @@ public class PostController {
 		return new CommonRespDto<>(1,"성공",postService.수정하기(id, postUpdateReqDto));
 	}
 	
-	
+	// 인증(Authentication) + 권한(Authorization) 필요
 	@DeleteMapping("/post/{id}")
 	public CommonRespDto<?> deleteById(@PathVariable Long id){
 		postService.삭제하기(id);
