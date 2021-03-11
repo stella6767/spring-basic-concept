@@ -1,5 +1,0 @@
-package com.cos.myjpa.exhandler;
-
-public class GlobalExceptionHandler {
-
-}
