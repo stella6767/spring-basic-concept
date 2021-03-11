@@ -2,11 +2,16 @@ package com.cos.blog.web;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.blog.config.auth.PrincipalDetails;
 import com.cos.blog.domain.post.Post;
@@ -30,10 +35,9 @@ public class PostController {
 		
 	
 	@GetMapping("/")
-	public String findAll(Model model) {
-		List<Post> posts = postService.전체찾기();		
+	public String findAll(Model model, @PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable) {			
+		Page<Post> posts = postService.전체찾기(pageable);		
 		model.addAttribute("posts",posts);
-		
 		return "post/list"; 
 	}
 	
