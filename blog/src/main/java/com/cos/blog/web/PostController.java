@@ -26,12 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final PostService postService;
-	
-	
-//	@GetMapping("/")
-//	public String index() {
-//		return "index";//ViewResolver 발동
-//	}
 		
 	
 	@GetMapping("/")
@@ -43,6 +37,7 @@ public class PostController {
 	
 	@GetMapping("/post/saveForm")
 	public String saveForm() {
+		
 		return "post/saveForm";
 	}
 	
@@ -59,13 +54,6 @@ public class PostController {
 			return "redirect:/post";
 		}
 		
-		
-//		Post post = postSaveReqDto.toEntity();
-//		post.setUser(details.getUser());
-//				
-//		postService.글쓰기(post);
-//		
-//		return "redirect:/post";
 	}
 	
 	

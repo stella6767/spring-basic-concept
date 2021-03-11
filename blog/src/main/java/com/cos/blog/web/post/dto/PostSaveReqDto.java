@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 public class PostSaveReqDto {
 	
-	private String title;
-	
+	private String title;	
 	private String content;
 	
 	public Post toEntity() {
