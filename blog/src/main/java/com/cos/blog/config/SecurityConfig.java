@@ -9,13 +9,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.cos.blog.config.oauth.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
+
+@RequiredArgsConstructor
+@EnableWebSecurity
 @Configuration // ioc 등록
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	
+	private final OAuth2DetailsService oAuth2DetailsService;
 	
 	//Ioc 등록만 하면 AuthenticationManager가 Bcrypt로 자동 검증해줌. 예전에는 알려주는 로직을 추가해야함.
 	@Bean
@@ -44,6 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				
 //			}
 //		});
-		.defaultSuccessUrl("/"); //위의 successHandler와 비슷하지만, 사용자가 갈려고 하는 페이지가 있을 때는 안 먹힘
+		.defaultSuccessUrl("/") //위의 successHandler와 비슷하지만, 사용자가 갈려고 하는 페이지가 있을 때는 안 먹힘
+		.and()
+		.oauth2Login()
+		.userInfoEndpoint()
+		.userService(oAuth2DetailsService);
 	}
 }

@@ -29,7 +29,14 @@ public class PostController {
 		
 	
 	@GetMapping("/")
-	public String findAll(Model model, @PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable) {			
+	public String findAll(Model model, @PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable,
+			@AuthenticationPrincipal PrincipalDetails details) {
+		
+		System.out.println("누구로 로그인 됐을까?");
+		System.out.println(details.isOAuth());
+		System.out.println(details.getAttributes());
+		System.out.println(details.getUser().getUsername());
+			
 		Page<Post> posts = postService.전체찾기(pageable);		
 		model.addAttribute("posts",posts);
 		return "post/list"; 

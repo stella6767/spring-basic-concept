@@ -2,23 +2,50 @@ package com.cos.blog.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.cos.blog.domain.user.User;
 
 import lombok.Data;
 
 @Data //principal (접근 주체) = 세션처럼 사용 = Spring Security Context 에 보관됨
-public class PrincipalDetails implements UserDetails{//UserDetails 상속받는 객체를 만든다.
+public class PrincipalDetails implements UserDetails, OAuth2User{//UserDetails 상속받는 객체를 만든다.
 
 	private User user;
+	private Map<String,Object> attributes; //OAuth 제공자로부터 받은 회원 정보
+	//왜 MAp으로 받냐면 OBject로 받으면 구글이면 구글, 카카오면 카카오, 따로따로 object를 다 만들어줘야 되는데
+	//이렇게 받으면 모든 제공자로부터 키값으로 object를 받을 수 있음	
+	private boolean oAuth = false;
 	
 	public PrincipalDetails(User user) {
 		this.user = user;
 	}
+	
+	public PrincipalDetails(User user, Map<String,Object> attributes) {
+		this.user = user;
+		this.attributes = attributes;
+		this.oAuth = true;  //어차피 attributes 들어오는 게 Oauth 로그인이라 true 설정  
+	}
+	
 
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return attributes;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "몰라";
+	}
+	
+	
+	
 	@Override// 계정의 비밀번호를 리턴한다.
 	public String getPassword() {
 		return user.getPassword();
@@ -57,5 +84,6 @@ public class PrincipalDetails implements UserDetails{//UserDetails 상속받는 
 		
 		return collectors;
 	}
+
 
 }
