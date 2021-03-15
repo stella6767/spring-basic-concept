@@ -10,11 +10,24 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.cos.jwtex1.config.jwt.JwtLoginFilter;
+import com.cos.jwtex1.config.jwt.JwtVerifyFilter;
+import com.cos.jwtex1.domain.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	private final UserRepository userRepository;
+	
+//	@Bean // 요렇게 해서 Ioc 에 등록하면 .addFilter(new JwtLoginFilter(authenticationManager())) 에 굳이 던질 필요가 없슴
+//	public AuthenticationManager authenticationManger() throws Exception {
+//		return authenticationManager(); 
+//	} //근데 이 방식은 안 쓸거임
+	
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -24,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.addFilter(new JwtLoginFilter(authenticationManager()))
-		//.addFilter(null)
+		.addFilter(new JwtLoginFilter(authenticationManager())) // 동작: /login(POST요청) 일 때만
+		.addFilter(new JwtVerifyFilter(authenticationManager(), userRepository))  //  /login(POST요청)이 아닌 모든 요청에 동작(권한이 필요한 모든 요청에 동작)
 		.csrf().disable()
 		.formLogin().disable()
 		.httpBasic().disable()  //기존 http 인증방식 무효화

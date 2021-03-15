@@ -36,11 +36,5 @@ public class KaKaoInfo extends OAuth2UserInfo {
 	@Override
 	public String getUsername() {
 		return "KaKao_"+attributes.get("id").toString();
-	}
-	
-
-	
-
-	
-	
+	}	
 }

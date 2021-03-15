@@ -35,7 +35,7 @@
 			if(res.statusCode === 1){
 				alert("수정에 성공하였습니다.");
 				location.href="/";
-			}else{
+			}else{ //else가 의미가 없는게 어차피 실패뜨면, fail로 탐. 이거 안 탐
 				alert("수정에 실패하였습니다.");
 			}
 		

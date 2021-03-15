@@ -27,7 +27,7 @@ public class RestApiController {
 		return "<h1>home</h1>";
 	}
 	
-	@PostMapping("/user")
+	@GetMapping("/user")
 	public String userPost() {
 		return "<h1>UserPost</h1>";
 	}

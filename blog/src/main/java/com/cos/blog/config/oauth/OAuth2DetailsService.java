@@ -69,7 +69,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 					.username(oAuth2UserInfo.getUsername())
 					.password(encPassword)
 					.email(oAuth2UserInfo.getEmail())
-					.role(RoleType.USER)
+					.role(RoleType.USER) //글쓰기 권한을 주자
 					.build();
 			
 			userEntity = userRepository.save(user);

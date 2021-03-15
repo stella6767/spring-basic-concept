@@ -118,7 +118,6 @@ INDEX VERSION 1.131+C:\Users\admin\Downloads\stsWork\.metadata\.plugins\org.ecli
 4279850729.index
 2685588735.index
 4102392620.index
-3666893704.index
 1686744010.index
 1674065843.index
 378136260.index

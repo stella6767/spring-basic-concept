@@ -49,6 +49,10 @@ public class UserController {
 		
 		//세션변경
 		//UsernamePasswordToken -> Authentication 객체로 만들어서 -> 시큐리티 컨텍스트 홀더에 집어넣으면 됨.
+//		Authentication authentication = 
+//				new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword());
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
 		details.setUser(userEntity);
 		
 		System.out.println("받은 데이터(update)");
