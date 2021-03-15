@@ -33,9 +33,9 @@ public class PostController {
 			@AuthenticationPrincipal PrincipalDetails details) {
 		
 		System.out.println("누구로 로그인 됐을까?");
-		System.out.println(details.isOAuth());
-		System.out.println(details.getAttributes());
-		System.out.println(details.getUser().getUsername());
+//		System.out.println(details.isOAuth()); 요것 때문에 로그인 안하면 널 포인트 익셉션 뜸
+//		System.out.println(details.getAttributes());
+//		System.out.println(details.getUser().getUsername());
 			
 		Page<Post> posts = postService.전체찾기(pageable);		
 		model.addAttribute("posts",posts);
@@ -58,7 +58,7 @@ public class PostController {
 		if(postEntity == null) {
 			return "post/saveForm";
 		}else {
-			return "redirect:/post";
+			return "redirect:/";
 		}
 		
 	}

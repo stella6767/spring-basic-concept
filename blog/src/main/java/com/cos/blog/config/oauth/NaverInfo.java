@@ -2,9 +2,9 @@ package com.cos.blog.config.oauth;
 
 import java.util.Map;
 
-public class FaceBookInfo extends OAuth2UserInfo {
+public class NaverInfo extends OAuth2UserInfo {
 
-	public FaceBookInfo(Map<String, Object> attributes) {
+	public NaverInfo(Map<String, Object> attributes) {
 		super(attributes);
 	}
 
@@ -30,7 +30,8 @@ public class FaceBookInfo extends OAuth2UserInfo {
 
 	@Override
 	public String getUsername() {
-		return "Facebook_"+(String)attributes.get("id");
+		return "Naver_"+(String)attributes.get("id");
 	}
+	
 	
 }

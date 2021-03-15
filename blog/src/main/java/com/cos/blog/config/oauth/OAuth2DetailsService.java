@@ -1,5 +1,6 @@
 package com.cos.blog.config.oauth;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.catalina.realm.X509UsernameRetriever;
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.cos.blog.config.auth.PrincipalDetails;
+import com.cos.blog.domain.user.RoleType;
 import com.cos.blog.domain.user.User;
 import com.cos.blog.domain.user.UserRepository;
 
@@ -49,7 +51,11 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 			oAuth2UserInfo = new GoogleInfo(oAuth2User.getAttributes());
 		}else if((userRequest.getClientRegistration().getClientName().equals("Facebook"))){
 			oAuth2UserInfo = new FaceBookInfo(oAuth2User.getAttributes());
-		}		
+		}else if((userRequest.getClientRegistration().getClientName().equals("Naver"))){
+			oAuth2UserInfo = new NaverInfo((Map)(oAuth2User.getAttributes().get("response")));
+		}else if((userRequest.getClientRegistration().getClientName().equals("Kakao"))){
+			oAuth2UserInfo = new KaKaoInfo((Map)(oAuth2User.getAttributes()));
+		}				
 			
 		//2번 최초: 회원가입 + 로그인 최초X : 로그인 
 		User userEntity = userRepository.findByUsername(oAuth2UserInfo.getUsername());
@@ -63,6 +69,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 					.username(oAuth2UserInfo.getUsername())
 					.password(encPassword)
 					.email(oAuth2UserInfo.getEmail())
+					.role(RoleType.USER)
 					.build();
 			
 			userEntity = userRepository.save(user);
@@ -73,7 +80,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 			
 			System.out.println("회원정보가 있습니다. 바로 로그인합니다.");
 			
-			userEntity = updateExistingUser(userEntity, oAuth2UserInfo);			
+			//userEntity = updateExistingUser(userEntity, oAuth2UserInfo);			
 			return new PrincipalDetails(userEntity, oAuth2UserInfo.getAttributes());
 		}
 		
