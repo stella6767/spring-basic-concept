@@ -13,6 +13,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +42,7 @@ public class User {
 	@Enumerated(EnumType.STRING) //Enum 타입을 DB에 String(VARCHAR)으로 저장
 	private RoleType role; //ADMIN, USER - enum
 	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
 	@CreationTimestamp //자동으로 현재시간이 들어감
 	private Timestamp createDate;
 	

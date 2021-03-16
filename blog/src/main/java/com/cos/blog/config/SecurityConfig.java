@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();   
 		http.authorizeRequests()
-		.antMatchers("/user/**","/post/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") //user와 post만 성문을 닫아둔다.
+		.antMatchers("/user/**","/post/**","/reply/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')") //user와 post만 성문을 닫아둔다.
 		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") //관리자만 들어올 수 있도록	    
 		.anyRequest().permitAll()
 		.and()

@@ -9,14 +9,19 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.blog.config.auth.PrincipalDetails;
 import com.cos.blog.domain.post.Post;
 import com.cos.blog.domain.post.PostRepository;
 import com.cos.blog.service.PostService;
+import com.cos.blog.web.dto.CMRespDto;
 import com.cos.blog.web.post.dto.PostSaveReqDto;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +53,21 @@ public class PostController {
 		return "post/saveForm";
 	}
 	
+	@GetMapping("/post/{id}/updateForm")
+	public String updateForm(@PathVariable int id, Model model) {
+		Post postEntity = postService.상세보기(id);
+		model.addAttribute("post",postEntity);
+		return "post/updateForm";
+	}
+	
+	@GetMapping("/post/{id}")
+	public String detail(@PathVariable int id, Model model) {
+		Post postEntity = postService.상세보기(id);
+		model.addAttribute("post", postEntity);
+		
+		return "post/detail"; //ViewResolver 
+	}
+	
 	@PostMapping("/post")
 	public String save(PostSaveReqDto postSaveReqDto, @AuthenticationPrincipal PrincipalDetails details) {
 		
@@ -61,6 +81,20 @@ public class PostController {
 			return "redirect:/";
 		}
 		
+	}
+	
+	@PutMapping("/post/{id}")
+	public @ResponseBody CMRespDto<?> update(@PathVariable int id, @RequestBody PostSaveReqDto postSaveReqDto){
+		postService.수정하기(id, postSaveReqDto);
+		return new CMRespDto<>(1, null);
+	}
+	
+	
+	
+	@DeleteMapping("/post/{id}")
+	public @ResponseBody CMRespDto<?> deleteById(@PathVariable int id){
+		postService.삭제하기(id);
+		return new CMRespDto<>(1,null);
 	}
 	
 	
