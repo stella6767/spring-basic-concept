@@ -40,7 +40,10 @@
 						<li class="nav-item"><a class="nav-link" href="/joinForm">회원가입</a></li>
 					</ul>
 				</div>
-
+				<form class="form-inline" action="/post/search" method="GET">
+					<input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword">
+					<button class="btn btn-success" type="submit">Search</button>
+				</form>
 			</c:when>
 			<c:otherwise>
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -50,6 +53,10 @@
 						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 					</ul>
 				</div>
+				<form class="form-inline" action="/post/search" method="GET">
+					<input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword">
+					<button class="btn btn-success" type="submit">Search</button>
+				</form>
 			</c:otherwise>
 		</c:choose>
 

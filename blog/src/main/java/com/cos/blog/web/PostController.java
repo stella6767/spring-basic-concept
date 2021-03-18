@@ -41,8 +41,11 @@ public class PostController {
 //		System.out.println(details.isOAuth()); 요것 때문에 로그인 안하면 널 포인트 익셉션 뜸
 //		System.out.println(details.getAttributes());
 //		System.out.println(details.getUser().getUsername());
-			
+		System.out.println("페이지넘버: " + pageable.getPageNumber());
+		System.out.println("offest: " +pageable.getOffset()); //시작점
+		
 		Page<Post> posts = postService.전체찾기(pageable);		
+		
 		model.addAttribute("posts",posts);
 		return "post/list"; 
 	}
@@ -81,6 +84,25 @@ public class PostController {
 			return "redirect:/";
 		}
 		
+	}
+	
+	
+	@GetMapping("/post/search")
+	public String search(Model model, String keyword, @PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable) {
+		
+		System.out.println("키워드 "+keyword);
+		System.out.println("offset: "+ pageable.getOffset());
+		Page<Post> posts = postService.검색하기(keyword,pageable);	
+		
+		System.out.println(posts);
+		System.out.println(posts.getTotalElements());
+		System.out.println(posts.isLast());
+		System.out.println(posts.isFirst());
+			
+		model.addAttribute("posts",posts);
+		model.addAttribute("keyword",keyword);
+		
+		return "post/searchlist";
 	}
 	
 	@PutMapping("/post/{id}")

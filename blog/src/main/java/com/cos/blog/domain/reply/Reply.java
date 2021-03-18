@@ -44,9 +44,6 @@ public class Reply {
 	@JoinColumn(name = "postId")
 	private Post post;
 	
-	
 	@CreationTimestamp
-	private Timestamp createDate;
-	
-	
+	private Timestamp createDate;	
 }
