@@ -1,6 +1,7 @@
 package com.cos.blog.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public class AuthController {
 	
 	
 	@PostMapping("/join")
-	public String join(AuthJoinReqDto authJoinReqDto) {
+	public String join(AuthJoinReqDto authJoinReqDto, BindingResult bindingResult) {
 		authService.회원가입(authJoinReqDto.toEntity());
 		return "redirect:/loginForm"; //  /auth  재활용
 	}

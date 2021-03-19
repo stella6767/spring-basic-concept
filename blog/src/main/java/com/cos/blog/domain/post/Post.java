@@ -38,7 +38,7 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Table, auto_increment, Sequence 
 	private Integer id;
 	
-	@Column(nullable = false,length = 100)
+	@Column(nullable = false,length = 100) //DB에 거는 제약조건
 	private String title;
 	
 	@Lob // 대용량 데이터

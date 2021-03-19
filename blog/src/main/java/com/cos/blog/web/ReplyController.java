@@ -1,6 +1,7 @@
 package com.cos.blog.web;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,8 @@ public class ReplyController {
 	private final ReplyService replyService;
 	
 	@PostMapping("/reply")
-	public CMRespDto<?> save(@RequestBody ReplySaveReqDto replySaveReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails){
+	public CMRespDto<?> save(@RequestBody ReplySaveReqDto replySaveReqDto, 
+			@AuthenticationPrincipal PrincipalDetails principalDetails, BindingResult bindingResult){
 
 		replySaveReqDto.setUser(principalDetails.getUser());
 		System.out.println("post reply:  "+replySaveReqDto);

@@ -31,8 +31,17 @@ public class PostService {
 	}
 	
 	@Transactional
-	public void 삭제하기(int id) {
-		postRepository.deleteById(id);
+	public int 삭제하기(int id, int userId) {
+		Post postEntity = postRepository.findById(id).get();
+		if(postEntity.getUser().getId() == userId) {
+			postRepository.deleteById(id);
+			return 1;
+		}else {
+			return -1;
+		}
+		
+		
+		
 	}
 	
 	
@@ -43,10 +52,15 @@ public class PostService {
 	
 	
 	@Transactional
-	public void 수정하기(int id, PostSaveReqDto postSaveReqDto) {
+	public void 수정하기(int id, PostSaveReqDto postSaveReqDto, int userId) {
 		Post postEntity = postRepository.findById(id).get(); //영속화
-		postEntity.setTitle(postSaveReqDto.getTitle());
-		postEntity.setContent(postSaveReqDto.getContent());
+		if(postEntity.getUser().getId() == userId) {
+			postEntity.setTitle(postSaveReqDto.getTitle());
+			postEntity.setContent(postSaveReqDto.getContent());
+		}else {
+			
+		}
+
 	}//더티체킹
 	
 	

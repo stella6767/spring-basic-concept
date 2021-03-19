@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,7 +73,8 @@ public class PostController {
 	}
 	
 	@PostMapping("/post")
-	public String save(PostSaveReqDto postSaveReqDto, @AuthenticationPrincipal PrincipalDetails details) {
+	public String save(PostSaveReqDto postSaveReqDto, @AuthenticationPrincipal PrincipalDetails details
+			, BindingResult bindingResult) {
 		
 		Post post = postSaveReqDto.toEntity();
 		post.setUser(details.getUser());
@@ -88,7 +90,8 @@ public class PostController {
 	
 	
 	@GetMapping("/post/search")
-	public String search(Model model, String keyword, @PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable) {
+	public String search(Model model, String keyword,
+			@PageableDefault(sort = "id",direction = Sort.Direction.DESC, size = 4) Pageable pageable) {
 		
 		System.out.println("키워드 "+keyword);
 		System.out.println("offset: "+ pageable.getOffset());
@@ -106,17 +109,19 @@ public class PostController {
 	}
 	
 	@PutMapping("/post/{id}")
-	public @ResponseBody CMRespDto<?> update(@PathVariable int id, @RequestBody PostSaveReqDto postSaveReqDto){
-		postService.수정하기(id, postSaveReqDto);
+	public @ResponseBody CMRespDto<?> update(@PathVariable int id, @RequestBody PostSaveReqDto postSaveReqDto,  
+			@AuthenticationPrincipal PrincipalDetails principalDetails, BindingResult bindingResult){
+		
+		postService.수정하기(id, postSaveReqDto, principalDetails.getUser().getId());
 		return new CMRespDto<>(1, null);
 	}
 	
 	
 	
 	@DeleteMapping("/post/{id}")
-	public @ResponseBody CMRespDto<?> deleteById(@PathVariable int id){
-		postService.삭제하기(id);
-		return new CMRespDto<>(1,null);
+	public @ResponseBody CMRespDto<?> deleteById(@PathVariable int id,  @AuthenticationPrincipal PrincipalDetails principalDetails){
+		int result = postService.삭제하기(id, principalDetails.getUser().getId());
+		return new CMRespDto<>(result,null);
 	}
 	
 	
